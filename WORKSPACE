@@ -31,9 +31,9 @@ load("@rules_coursier//rules:coursier.bzl", "coursier_repository")
 
 coursier_repository(
     name = "jvm_deps",
-    scala_deps = [
-        "org.typelevel:cats-core_2.12:1.4.0",
+    coordinates = [
         "io.circe:circe-core_2.12:0.10.1",
         "org.apache.spark:spark-core_2.12:2.4.0",
+        "org.typelevel:cats-core_2.12:1.4.0",
     ],
 )

@@ -42,15 +42,15 @@ exports_files([
 
 def _coursier_repository_implementation(ctx):
     cli = ctx.path(ctx.attr._cli)
-    deps = " ".join(ctx.attr.scala_deps)
-    jars = _execute(ctx, "{cli} fetch {deps} --json-output-file _jars.json".format(
+    coordinates = " ".join(ctx.attr.coordinates)
+    jars = _execute(ctx, "{cli} fetch {coordinates} --json-output-file _jars.json".format(
         cli = cli,
-        deps = deps,
+        coordinates = coordinates,
     ))
 
-    sources = _execute(ctx, "{cli} fetch {deps} --classifier sources --json-output-file _sources.json".format(
+    sources = _execute(ctx, "{cli} fetch {coordinates} --classifier sources --json-output-file _sources.json".format(
         cli = cli,
-        deps = deps,
+        coordinates = coordinates,
     ))
 
     filter1 = """'
@@ -87,7 +87,7 @@ def _coursier_repository_implementation(ctx):
 
 coursier_repository = repository_rule(
     attrs = {
-        "scala_deps": attr.string_list(),
+        "coordinates": attr.string_list(),
         "_cli": attr.label(
             cfg = "host",
             default = "@coursier//:coursier",
